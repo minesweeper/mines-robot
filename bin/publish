@@ -2,5 +2,6 @@
 
 set -e
 
+npm install
 npm run dist
 npm publish
