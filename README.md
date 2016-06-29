@@ -8,6 +8,31 @@ A pure JS implementation of a robot player for the minesweeper game.
 npm install mines-robot --save
 ```
 
+## Usage
+
+```javascript
+var mines = require('mines');
+var robot = require('mines-robot');
+
+var game = mines();
+var player = robot(game);
+
+player.takeTurn();
+player.takeTurn();
+```
+
+## Development
+
+```
+npm install
+npm test
+npm run dist
+```
+
+```javascript
+var robot = require('./dist');
+```
+
 ## Release History
 
 * 0.0.1 Initial release
