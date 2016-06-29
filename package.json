@@ -1,0 +1,16 @@
+{
+  "name": "mines-robot",
+  "version": "0.0.1",
+  "description": "robot player for mines npm module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mines",
+    "minesweeper",
+    "game"
+  ],
+  "author": "Mark Ryall <mark@ryall.name> (http://mark.ryall.name)",
+  "license": "ISC"
+}
