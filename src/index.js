@@ -1,9 +1,6 @@
-const robot = (game) => {
-  const takeTurn = () => {};
+const markMines = (game) => {};
+const revealSafeCells = (game) => {};
+const guess = (game) => {};
+const takeTurn = (game) => {};
 
-  return {
-    takeTurn: takeTurn
-  };
-};
-
-module.exports = robot;
+module.exports = {markMines, revealSafeCells, guess, takeTurn};
