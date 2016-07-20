@@ -1,6 +1,11 @@
-const markMines = (game) => {};
-const revealSafeCells = (game) => {};
-const guess = (game) => {};
-const takeTurn = (game) => {};
+import helpers from './helpers';
+import {isEmpty} from 'lodash';
 
-module.exports = {markMines, revealSafeCells, guess, takeTurn};
+const takeTurn = (game) => {
+  helpers.markMines(game);
+  if (isEmpty(helpers.revealSafeCells(game))) {
+    helpers.guess(game);
+  }
+};
+
+module.exports = {takeTurn};
