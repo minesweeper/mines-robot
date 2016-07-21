@@ -14,7 +14,12 @@ npm install mines-robot --save
 var mines = require('mines');
 var robot = require('mines-robot');
 
-var game = mines();
+var game = mines.create();
+game.onGameStateChange(
+  function () {
+    console.log(game.renderAsString());
+  }
+);
 robot.takeTurn(game); // takes a single turn (marking mines and revealing at least one cell)
 ```
 
