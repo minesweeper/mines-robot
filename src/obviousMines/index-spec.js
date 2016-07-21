@@ -14,6 +14,16 @@ describe('obviousMines', () => {
     expect(obviousMines(game)).toEqual([[0, 1]]);
   });
 
+  it('should not find an obvious mine when they are already marked', () => {
+    const game = mines.createTest(`
+      . *
+    `);
+    game.mark([0, 1]);
+    expect(game.cellState([0, 0])).toEqual(cellStates.UNKNOWN);
+    expect(game.cellState([0, 1])).toEqual(cellStates.MARKED);
+    expect(obviousMines(game)).toEqual([]);
+  });
+
   it('should know an obvious mine when there are two unrevealed mines neighbouring a "two" cell', () => {
     const game = mines.createTest(`
       * . *
@@ -21,6 +31,17 @@ describe('obviousMines', () => {
     game.reveal([0, 1]);
     expect(game.cellState([0, 1])).toEqual(cellStates[2]);
     expect(obviousMines(game)).toEqual([[0, 0], [0, 2]]);
+  });
+
+  it('should know a single obvious mine when there are two unrevealed mines neighbouring a "two" cell, one already flagged', () => {
+    const game = mines.createTest(`
+      * . * . . *
+    `);
+    game.reveal([0, 1]);
+    expect(game.cellState([0, 1])).toEqual(cellStates[2]);
+    game.mark([0, 0]);
+    expect(game.cellState([0, 0])).toEqual(cellStates.MARKED);
+    expect(obviousMines(game)).toEqual([[0, 2]]);
   });
 
   it('should know an obvious mine when there are two unrevealed mines neighbouring a "two" cell', () => {

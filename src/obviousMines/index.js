@@ -3,8 +3,7 @@ import {cellStates} from 'mines';
 import cellNeighbours from '../cellNeighbours';
 
 export default (game) => {
-  const rowCount = game.dimensions[0];
-  const colCount = game.dimensions[1];
+  const [rowCount, colCount] = game.dimensions;
   let obviousMines = [];
 
   times(rowCount, (rowIndex) => {
@@ -17,7 +16,10 @@ export default (game) => {
           const unmarkedNeighbours = filter(neighbours, (neighbour) => {
             return game.cellState(neighbour) === cellStates.UNKNOWN;
           });
-          if (unmarkedNeighbours.length === index) {
+          const markedNeighbours = filter(neighbours, (neighbour) => {
+            return game.cellState(neighbour) === cellStates.MARKED;
+          });
+          if (unmarkedNeighbours.length + markedNeighbours.length <= index) {
             obviousMines = unionWith(obviousMines, unmarkedNeighbours, isEqual);
           }
         }
