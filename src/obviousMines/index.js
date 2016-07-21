@@ -1,27 +1,22 @@
-import {times, filter, unionWith, isEqual} from 'lodash';
-import {cellStates} from 'mines';
+import {filter, unionWith, isEqual} from 'lodash';
 import cellNeighbours from '../cellNeighbours';
-import eachCell from '../eachCell';
+import eachRevealedCell from '../eachRevealedCell';
+import {cellStates} from 'mines';
 
 export default (game) => {
   let obviousMines = [];
 
-  eachCell(game, (cell, cellState) => {
-    const numbers = 9;
-    times(numbers, (index) => {
-      if (cellState === cellStates[index]) {
-        const neighbours = cellNeighbours(game.dimensions, cell);
-        const unmarkedNeighbours = filter(neighbours, (neighbour) => {
-          return game.cellState(neighbour) === cellStates.UNKNOWN;
-        });
-        const markedNeighbours = filter(neighbours, (neighbour) => {
-          return game.cellState(neighbour) === cellStates.MARKED;
-        });
-        if (unmarkedNeighbours.length + markedNeighbours.length <= index) {
-          obviousMines = unionWith(obviousMines, unmarkedNeighbours, isEqual);
-        }
-      }
+  eachRevealedCell(game, (cell, count) => {
+    const neighbours = cellNeighbours(game.dimensions, cell);
+    const unmarkedNeighbours = filter(neighbours, (neighbour) => {
+      return game.cellState(neighbour) === cellStates.UNKNOWN;
     });
+    const markedNeighbours = filter(neighbours, (neighbour) => {
+      return game.cellState(neighbour) === cellStates.MARKED;
+    });
+    if (unmarkedNeighbours.length + markedNeighbours.length <= count) {
+      obviousMines = unionWith(obviousMines, unmarkedNeighbours, isEqual);
+    }
   });
 
   return obviousMines;
