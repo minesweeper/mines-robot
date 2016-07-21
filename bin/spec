@@ -2,4 +2,4 @@
 
 set -e
 
-mocha --require config/mocha-compile.js --require config/mocha-init.js $*
+mocha --compilers js:babel-core/register $*

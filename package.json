@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "dist": "babel src --presets babel-preset-es2015 --ignore '**/*-spec.js' --out-dir dist",
-    "test": "mocha --require config/mocha-compile.js 'src/**/*-spec.*' && eslint src"
+    "test": "mocha --compilers js:babel-core/register 'src/**/*-spec.*' && eslint src"
   },
   "keywords": [
     "mines",
