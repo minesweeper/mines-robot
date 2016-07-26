@@ -1,5 +1,6 @@
 import bestGuess from './bestGuess';
 import obviousMines from './obviousMines';
+import safeChords from './safeChords';
 import {each} from 'lodash';
 
 const markMines = (game) => {
@@ -9,9 +10,9 @@ const markMines = (game) => {
 };
 
 const revealSafeCells = (game) => {
-  const safeCells = [];
-  each(safeCells, (cell) => { game.chord(cell); });
-  return safeCells;
+  const safe = safeChords(game);
+  each(safe, (cell) => { game.chord(cell); });
+  return safe;
 };
 
 const guess = (game) => {
