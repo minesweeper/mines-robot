@@ -8,7 +8,8 @@ export default (game) => {
 
   eachRevealedCell(game, (cell, count) => {
     const markedNeighbours = neighboursWithState(game, cell, cellStates.MARKED);
-    if (markedNeighbours.length === count) {
+    const unknownNeighbours = neighboursWithState(game, cell, cellStates.UNKNOWN);
+    if (markedNeighbours.length === count && unknownNeighbours.length > 0) {
       safeChords = unionWith(safeChords, [cell], isEqual);
     }
   });

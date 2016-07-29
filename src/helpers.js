@@ -17,7 +17,7 @@ const revealSafeCells = (game) => {
 
 const guess = (game) => {
   const cell = bestGuess(game);
-  game.chord(cell);
+  game.reveal(cell);
   return cell;
 };
 

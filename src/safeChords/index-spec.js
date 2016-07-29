@@ -37,4 +37,18 @@ describe('safeChords', () => {
     reveal([1, 1]);
     expect(safeChords(game)).toEqual([]);
   });
+
+  it('should take into account having more than one unknown neighbour if it needs to chord', () => {
+    game = mines.createTest(`
+      . . . . *
+      . . . . *
+      . * * * .
+      * . . . .
+      . . * * *
+    `);
+    reveal([0, 0], [0, 1], [0, 2], [0, 3], [1, 0], [1, 1], [1, 2], [1, 3], [2, 0]);
+    mark([2, 1], [2, 2], [2, 3]);
+    expect(safeChords(game)).toEqual([]);
+  });
+
 });
