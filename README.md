@@ -39,3 +39,4 @@ var robot = require('./dist');
 
 * 0.0.1 Initial release
 * 0.0.2 Initial release with babel transpilation
+* 0.1.0 Basic release with very simple guessing, mine and cell logic.

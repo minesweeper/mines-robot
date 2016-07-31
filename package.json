@@ -1,6 +1,6 @@
 {
   "name": "mines-robot",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "robot player for mines npm module",
   "main": "./dist/index.js",
   "scripts": {
