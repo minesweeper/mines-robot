@@ -41,3 +41,4 @@ var robot = require('./dist');
 * 0.0.2 Initial release with babel transpilation
 * 0.1.0 Basic release with very simple guessing, mine and cell logic.
 * 0.2.0 Adds some probability based guessing
+* 0.2.1 Fix bug where robot could get stuck if it couldn't determine any probabilities
