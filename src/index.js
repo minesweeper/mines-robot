@@ -2,8 +2,9 @@ import helpers from './helpers';
 import {isEmpty} from 'lodash';
 
 const takeTurn = (game) => {
-  helpers.markMines(game);
-  if (isEmpty(helpers.revealSafeCells(game))) {
+  const marked = helpers.markMines(game);
+  const chorded = helpers.revealSafeCells(game);
+  if (isEmpty(marked) && isEmpty(chorded)) {
     helpers.guess(game);
   }
 };

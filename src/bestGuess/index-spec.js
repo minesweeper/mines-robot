@@ -9,14 +9,14 @@ describe('bestGuess', () => {
   const mark = function() {
     each(arguments, (cell) => { game.mark(cell); });
   };
-  it('should just choose the first unknown cell', () => {
+  it('should just choose the first unknown cell when the game hasn\'t started', () => {
     game = mines.createTest(`
       . *
     `);
     expect(bestGuess(game)).toEqual([0, 0]);
   });
 
-  it('should just choose the first unknown cell', () => {
+  it('should just choose the first unknown cell when the game hasn\'t started, even if a cell has been marked', () => {
     game = mines.createTest(`
       * * .
       . . .
