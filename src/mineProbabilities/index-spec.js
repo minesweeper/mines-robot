@@ -16,6 +16,20 @@ describe('mineProbability', () => {
     expect(mineProbabilities(game)).toEqual(expectedProbabilities);
   });
 
+  // it('should take into account remaining mine count for the game', () => {
+  //   game = mines.createTest(`
+  //     * . *
+  //     * * *
+  //   `);
+  //   game.mark([0, 0]);
+  //   game.mark([0, 2]);
+  //   game.mark([1, 0]);
+  //   game.mark([1, 1]);
+  //   game.mark([1, 2]);
+  //   const expectedProbabilities = [[0, 1], 0];
+  //   expect(mineProbabilities(game)).toEqual(expectedProbabilities);
+  // });
+
   it('should return the probability for each cell around a number', () => {
     game = mines.createTest(`
       * . .
