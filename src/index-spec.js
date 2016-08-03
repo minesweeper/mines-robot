@@ -1,5 +1,6 @@
 import robot from '.';
 import helpers from './helpers';
+import {gameStates} from 'mines';
 import mines from 'mines';
 import expect from 'expect';
 
@@ -55,6 +56,33 @@ describe('robot', () => {
       safeCells = [[0, 0]];
       robot.takeTurn(game);
       expect(calls).toEqual(['markMines', 'revealSafeCells']);
+    });
+  });
+
+  describe('winning a game', () => {
+    xit('can win an expert game without guessing', () => {
+      game = mines.createTest(`
+        . . . . . . . . . * * . . . * . . . . . . . . . . . . . * .
+        . . . * . * . . . . . . . . * . . . * . . . * * * . * . . .
+        . . . . . . . . . . . . * . * * . . . . * * . . . . * . . .
+        * . . . * . * * . . . . . * . . . . . . . . . . . . . . * .
+        . . . . . . . . . . . * . . * . . . . . . . . . . * . . * .
+        * . . . . . . . . . * * . . . . . . . . . . * . . * . . . .
+        . . . . . . . . . . . . . . . . * * . . * . . . . . * . . .
+        * * * . . . . . . * . . . . . . . . . . . . * . . . * . * .
+        * . * . . * . * . . . . . . * * . . . . * . . . . * . . . .
+        . . . * * . * . . . . . . . . . . . . . . . . . . . . . . *
+        . . . . . . . . * . . . * . . . . . * . . . * . . . . . . .
+        . . * . . . . * . . * . . . . . . * . . . . . * . * * . * .
+        . . . . * . . . . . * * . . * . . . * * . . . . * . . . . .
+        . . . * . . . . * . * . . . . . . * . . * * . . * . . * . *
+        . * * . * * . . . . * * * * . . * . . . . . * . . . . . . *
+        . . . . . . . . . . . . . . . * . . . . * . * . . . . * . .
+      `);
+      while (game.state() === gameStates.NOT_STARTED || game.state() === gameStates.STARTED) {
+        robot.takeTurn(game);
+      }
+      expect(game.state()).toEqual(gameStates.WON);
     });
   });
 });
