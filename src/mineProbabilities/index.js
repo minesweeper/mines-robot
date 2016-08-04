@@ -1,10 +1,33 @@
 import {cellStates} from 'mines';
 import eachRevealedCell from '../eachRevealedCell';
+import addIfLower from '../addIfLower';
+import eachCell from '../eachCell';
 import neighboursWithState from '../neighboursWithState';
-import {each, reverse, findIndex, isEqual} from 'lodash';
+import {each, reverse} from 'lodash';
 
 export default (game) => {
-  const mineProbabilities = [];
+  let mineProbabilities = [];
+
+  let totalUknownCellCount = 0;
+
+  eachCell(game, (cell, cellState) => {
+    if (cellState === cellStates.UNKNOWN) {
+      totalUknownCellCount += 1;
+    }
+  });
+
+  eachCell(game, (cell, cellState) => {
+    if (cellState === cellStates.UNKNOWN) {
+      let probability = null;
+      const remainingMineCount = game.remainingMineCount();
+      if (remainingMineCount === 0) {
+        probability = 0;
+      } else {
+        probability = remainingMineCount / totalUknownCellCount;
+      }
+      mineProbabilities = addIfLower(mineProbabilities, cell, probability);
+    }
+  });
 
   eachRevealedCell(game, (cell, count) => {
     const unmarkedNeighbours = neighboursWithState(game, cell, cellStates.UNKNOWN);
@@ -15,26 +38,22 @@ export default (game) => {
     if (numberUnmarkedNeighbours > 0 && count > 0) {
       each(reverse(unmarkedNeighbours), (neighbour) => {
         const probability = (count - numberMarkedNeighbours) / numberUnmarkedNeighbours;
-        if (mineProbabilities.length > 0) {
-            const index = findIndex(mineProbabilities, (mp) => { return isEqual(mp[0], neighbour); });
-            if (index > -1) {
-              if (probability < mineProbabilities[index][1]) {
-                mineProbabilities[index] = [neighbour, probability];
-              }
-            } else {
-              const firstCellsProbability = mineProbabilities[0][1];
-              if (probability <= firstCellsProbability) {
-                mineProbabilities.unshift([neighbour, probability]);
-              } else {
-                mineProbabilities.push([neighbour, probability]);
-              }
-            }
-        } else {
-          mineProbabilities.push([neighbour, probability]);
-        }
+        mineProbabilities = addIfLower(mineProbabilities, neighbour, probability, false);
       });
     }
   });
 
-  return mineProbabilities;
+  return mineProbabilities.sort((a, b) => {
+    let difference = null;
+    if (b[1] === a[1]) { // same probability - sort by index
+      if (a[0][0] === b[0][0]) { // same row - sort by col
+        difference = a[0][1] - b[0][1]; // difference in column values
+      } else {
+        difference = a[0][0] - b[0][0];
+      }
+    } else {
+      difference = a[1] - b[1];
+    }
+    return difference;
+  });
 };

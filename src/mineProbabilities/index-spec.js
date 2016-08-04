@@ -6,17 +6,20 @@ import {cellStates} from 'mines';
 describe('mineProbability', () => {
   let game = null;
 
-  it('should return nothing for a non-started game', () => {
+  it('should return every cell as equal for a non-started game', () => {
     game = mines.createTest(`
-      . . .
-      . . .
-      . . *
+      . .
+      . *
     `);
-    const expectedProbabilities = [];
+    const oneQuarter = 1 / 4;
+    const expectedProbabilities = [[[0, 0], oneQuarter],
+                                   [[0, 1], oneQuarter],
+                                   [[1, 0], oneQuarter],
+                                   [[1, 1], oneQuarter]];
     expect(mineProbabilities(game)).toEqual(expectedProbabilities);
   });
 
-  xit('should take into account remaining mine count for the game', () => {
+  it('should take into account remaining mine count for the game', () => {
     game = mines.createTest(`
       * . *
       * * *
@@ -26,7 +29,7 @@ describe('mineProbability', () => {
     game.mark([1, 0]);
     game.mark([1, 1]);
     game.mark([1, 2]);
-    const expectedProbabilities = [[0, 1], 0];
+    const expectedProbabilities = [[[0, 1], 0]];
     expect(mineProbabilities(game)).toEqual(expectedProbabilities);
   });
 
@@ -50,7 +53,7 @@ describe('mineProbability', () => {
     expect(mineProbabilities(game)).toEqual(expectedProbabilities);
   });
 
-  it('should return the  ordered probabilities for each cell around a number for multiple cells', () => {
+  it('should return the ordered probabilities for each cell around a number for multiple cells', () => {
     game = mines.createTest(`
       * . . . . *
       * . . . . .
@@ -61,7 +64,7 @@ describe('mineProbability', () => {
     game.reveal([1, 4]);
     expect(game.cellState([1, 4])).toEqual(cellStates[1]);
     const oneEighth = 1 / 8;
-    const oneQuarter = 2 / 8;
+    const threeSixteenth = 3 / 16;
     const expectedProbabilities = [[[0, 3], oneEighth],
                                    [[0, 4], oneEighth],
                                    [[0, 5], oneEighth],
@@ -70,14 +73,14 @@ describe('mineProbability', () => {
                                    [[2, 3], oneEighth],
                                    [[2, 4], oneEighth],
                                    [[2, 5], oneEighth],
-                                   [[0, 0], oneQuarter],
-                                   [[0, 1], oneQuarter],
-                                   [[0, 2], oneQuarter],
-                                   [[1, 0], oneQuarter],
-                                   [[1, 2], oneQuarter],
-                                   [[2, 0], oneQuarter],
-                                   [[2, 1], oneQuarter],
-                                   [[2, 2], oneQuarter]];
+                                   [[0, 0], threeSixteenth],
+                                   [[0, 1], threeSixteenth],
+                                   [[0, 2], threeSixteenth],
+                                   [[1, 0], threeSixteenth],
+                                   [[1, 2], threeSixteenth],
+                                   [[2, 0], threeSixteenth],
+                                   [[2, 1], threeSixteenth],
+                                   [[2, 2], threeSixteenth]];
     expect(mineProbabilities(game)).toEqual(expectedProbabilities);
   });
 
@@ -110,9 +113,11 @@ describe('mineProbability', () => {
     expect(game.cellState([0, 0])).toEqual(cellStates[1]);
     game.reveal([1, 0]);
     expect(game.cellState([1, 0])).toEqual(cellStates[1]);
-    const oneHalf = 1 / 2;
-    const expectedProbabilities = [[[0, 1], oneHalf],
-                                   [[1, 1], oneHalf]];
+    const oneQuarter = 1 / 4;
+    const expectedProbabilities = [[[0, 1], oneQuarter],
+                                   [[0, 2], oneQuarter],
+                                   [[1, 1], oneQuarter],
+                                   [[1, 2], oneQuarter]];
     expect(mineProbabilities(game)).toEqual(expectedProbabilities);
   });
 });
