@@ -42,3 +42,4 @@ var robot = require('./dist');
 * 0.1.0 Basic release with very simple guessing, mine and cell logic.
 * 0.2.0 Adds some probability based guessing
 * 0.2.1 Fix bug where robot could get stuck if it couldn't determine any probabilities
+* 0.2.2 Adds probabilities for every cell (based upon remaining mine count)
