@@ -9,6 +9,7 @@ describe('bestGuess', () => {
   const mark = function() {
     each(arguments, (cell) => { game.mark(cell); });
   };
+  
   it('should just choose the first unknown cell when the game hasn\'t started', () => {
     game = mines.createTest(`
       . *
