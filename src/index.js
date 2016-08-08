@@ -4,7 +4,8 @@ import {isEmpty} from 'lodash';
 const takeTurn = (game) => {
   const marked = helpers.markMines(game);
   const chorded = helpers.revealSafeCells(game);
-  if (isEmpty(marked) && isEmpty(chorded)) {
+  const revealed = helpers.revealSafeCellsFromClusters(game);
+  if (isEmpty(marked) && isEmpty(chorded) && isEmpty(revealed)) {
     helpers.guess(game);
   }
 };

@@ -1,6 +1,7 @@
 import bestGuess from './bestGuess';
 import obviousMines from './obviousMines';
 import safeChords from './safeChords';
+import safeCellsFromClusters from './safeCellsFromClusters';
 import {each} from 'lodash';
 
 const markMines = (game) => {
@@ -15,10 +16,16 @@ const revealSafeCells = (game) => {
   return safe;
 };
 
+const revealSafeCellsFromClusters = (game) => {
+  const safe = safeCellsFromClusters(game);
+  each(safe, (cell) => { game.reveal(cell); });
+  return safe;
+};
+
 const guess = (game) => {
   const cell = bestGuess(game);
   game.reveal(cell);
   return cell;
 };
 
-export default { markMines, revealSafeCells, guess };
+export default { markMines, revealSafeCells, revealSafeCellsFromClusters, guess };
