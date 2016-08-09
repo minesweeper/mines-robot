@@ -14,10 +14,12 @@ if (_.isNaN(count)) {
 }
 
 _.times(count, function (index) {
+  var result;
   while (game.state() === mines.gameStates.NOT_STARTED || game.state() === mines.gameStates.STARTED) {
-    robot.takeTurn(game);
+    result = robot.takeTurn(game);
   }
-  console.log("Game", index + 1, game.state());
+  console.log("Game", index + 1, game.state(), result);
+  console.log(game.renderAsString());
   stats[game.state()] += 1;
   game.reset();
 });
