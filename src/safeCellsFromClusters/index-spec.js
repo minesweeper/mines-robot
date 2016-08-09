@@ -48,7 +48,27 @@ describe('safeCellsFromClusters', () => {
     expect(obviousMines(game)).toEqual([[1, 3]]);
     expect(safeChords(game)).toEqual([]);
     expect(safeCellsFromClusters(game)).toEqual([
-      [1, 3], [3, 2]
+      [3, 2]
+    ]);
+  });
+
+  it('should analyse a game and return safe cells from clusters for a more complex game 2', () => {
+    game = mines.createTest(`
+      . . . . .
+      . . . . .
+      . . . . .
+      * * . . *
+    `);
+    reveal([0, 0], [0, 1], [0, 2], [0, 3], [0, 4],
+           [1, 0], [1, 1], [1, 2], [1, 3], [1, 4]);
+    // 0 0 0 0 0
+    // 0 0 0 0 0
+    // 2 2 1 1 1
+    // . . . . .
+    expect(obviousMines(game)).toEqual([[3, 0], [3, 1]]);
+    expect(safeChords(game)).toEqual([]);
+    expect(safeCellsFromClusters(game)).toEqual([
+      [3, 2]
     ]);
   });
 });
