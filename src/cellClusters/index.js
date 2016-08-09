@@ -10,7 +10,7 @@ export default (game) => {
     const unmarkedNeighbours = neighboursWithState(game, cell, cellStates.UNKNOWN);
     const markedNeighbours = neighboursWithState(game, cell, cellStates.MARKED);
 
-    if (unmarkedNeighbours.length > 0) {
+    if (unmarkedNeighbours.length > 0 && markedNeighbours.length < count) {
       let sameRow = true;
       let sameCol = true;
       const firstRow = unmarkedNeighbours[0][0];
