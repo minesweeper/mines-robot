@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+var _ = require('lodash');
+var mines = require('mines');
+var robot = require('../dist');
+var stats = {};
+stats[mines.gameStates.WON] = 0;
+stats[mines.gameStates.LOST] = 0;
+var count = parseInt(process.argv[2]);
+var game = mines.create();
+
+if (_.isNaN(count)) {
+  count = 100;
+}
+
+_.times(count, function (index) {
+  while (game.state() === mines.gameStates.NOT_STARTED || game.state() === mines.gameStates.STARTED) {
+    robot.takeTurn(game);
+  }
+  console.log("Game", index + 1, game.state());
+  stats[game.state()] += 1;
+  game.reset();
+});
+
+console.log(stats);
