@@ -21,7 +21,33 @@ export default (game) => {
         if (neighbour[1] !== firstCol) { sameCol = false; }
       });
 
-      if ((sameRow || sameCol) && unmarkedNeighbours.length - markedNeighbours.length >= count) {
+      let colSequential = true;
+      if (sameRow) {
+        let previousCol = null;
+        each(unmarkedNeighbours, (neighbour, index) => {
+          const currentCol = neighbour[1];
+          if (index !== 0 && currentCol !== previousCol + 1) {
+            colSequential = false;
+          } else {
+            previousCol = currentCol;
+          }
+        });
+      }
+
+      let rowSequential = true;
+      if (sameCol) {
+        let previousRow = null;
+        each(unmarkedNeighbours, (neighbour, index) => {
+          const currentRow = neighbour[0];
+          if (index !== 0 && currentRow !== previousRow + 1) {
+            rowSequential = false;
+          } else {
+            previousRow = currentRow;
+          }
+        });
+      }
+
+      if ((sameRow || sameCol) && rowSequential && colSequential && unmarkedNeighbours.length - markedNeighbours.length >= count) {
         let exists = false;
         const newCluster = [count, unmarkedNeighbours];
         each(cellClusters, (existingCluster) => {

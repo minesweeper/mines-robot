@@ -9,6 +9,7 @@ const takeTurn = (game) => {
   if (isEmpty(marked) && isEmpty(markedByClusters) && isEmpty(chorded) && isEmpty(revealed)) {
     helpers.guess(game);
   }
+  return {marked, markedByClusters, chorded, revealed};
 };
 
 module.exports = {takeTurn};
