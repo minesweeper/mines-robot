@@ -139,4 +139,24 @@ describe('safeCellsFromClusters', () => {
     expect(safeCellsFromClusters(game)).toEqual([
     ]);
   });
+
+  it('should analyse a game and return cell clusters corners', () => {
+    game = mines.createTest(`
+      . . . . *
+      . . . . .
+      * * . * .
+      . . . . .
+    `);
+    reveal([0, 0], [0, 1], [0, 2], [0, 3],
+           [1, 0], [1, 1], [1, 2], [1, 3],
+           [2, 2]);
+    // 0 0 0 1 .
+    // 2 2 2 2 .
+    // . . 2 . .
+    // . . . . .
+    expect(obviousMines(game)).toEqual([[2, 0], [2, 1], [2, 3]]);
+    expect(safeChords(game)).toEqual([]);
+    expect(safeCellsFromClusters(game)).toEqual([
+    ]);
+  });
 });
