@@ -44,3 +44,4 @@ var robot = require('./dist');
 * 0.2.1 Fix bug where robot could get stuck if it couldn't determine any probabilities
 * 0.2.2 Adds probabilities for every cell (based upon remaining mine count)
 * 0.2.3 bestGuess is much simpler now
+* 0.3.0 The first attempt at adding clusters detecting 1-1 and 1-2 patterns
