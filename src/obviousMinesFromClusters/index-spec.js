@@ -5,7 +5,7 @@ import obviousMines from '../obviousMines/.';
 import safeChords from '../safeChords/.';
 import obviousMinesFromClusters from '.';
 
-describe('safeCellsFromClusters', () => {
+describe('obviousMinesFromClusters', () => {
   let game = null;
 
   const reveal = function() {

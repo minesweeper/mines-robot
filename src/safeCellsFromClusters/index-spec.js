@@ -14,7 +14,7 @@ describe('safeCellsFromClusters', () => {
     });
   };
 
-  it('should analyse a game and return safe cells from cell clusters', () => {
+  it('should be able to find a simple 1-1 pattern which determines a safe cell', () => {
     game = mines.createTest(`
       . . . .
       . . . *
