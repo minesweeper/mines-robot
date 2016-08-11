@@ -1,33 +1,31 @@
 import {each, isEqual, unionWith} from 'lodash';
 import cellClusters from '../cellClusters';
-import fullDifference from '../fullDifference';
+import clusterPairs from '../clusterPairs';
+import clustersIntersect from '../clustersIntersect';
+import leftDifference from '../leftDifference';
 
 export default (game) => {
   let obviousMinesFromClusters = [];
   const clusters = cellClusters(game);
-  each(clusters, (firstCluster, firstIndex) => {
-    each(clusters, (secondCluster, secondIndex) => {
-      const firstClusterLength = firstCluster[1].length;
-      const secondClusterLength = secondCluster[1].length;
-      const firstClusterCount = firstCluster[0];
-      const secondClusterCount = secondCluster[0];
-      const firstClusterCells = firstCluster[1];
-      const secondClusterCells = secondCluster[1];
+  const pairedClusters = clusterPairs(clusters);
 
-      if (firstIndex !== secondIndex && firstClusterCount !== secondClusterCount && firstClusterLength !== secondClusterLength) {
-         const difference = fullDifference(firstClusterCells, secondClusterCells);
-         let clusterCellDifference = null;
+  each(pairedClusters, (clusterPair) => {
+    const [clusterOne, clusterTwo] = clusterPair;
+    const [clusterOneCount, clusterOneCells] = clusterOne;
+    const [clusterTwoCount, clusterTwoCells] = clusterTwo;
 
-         if (firstClusterLength > secondClusterLength) {
-           clusterCellDifference = firstClusterCount - secondClusterCount;
-         } else {
-           clusterCellDifference = secondClusterCount - firstClusterCount;
-         }
-         if (difference.length === clusterCellDifference) {
-           obviousMinesFromClusters = unionWith(obviousMinesFromClusters, difference, isEqual);
-         }
-       }
-    });
+    if (clustersIntersect(clusterOneCells, clusterTwoCells)) {
+      let difference = [];
+      if (clusterOneCount === 1 && clusterTwoCount === 2) {
+        difference = leftDifference(clusterTwoCells, clusterOneCells);
+      }
+      if (clusterOneCount === 2 && clusterTwoCount === 1) {
+        difference = leftDifference(clusterOneCells, clusterTwoCells);
+      }
+      if (difference.length === 1) {
+        obviousMinesFromClusters = unionWith(obviousMinesFromClusters, difference, isEqual);
+      }
+    }
   });
   return obviousMinesFromClusters;
 };

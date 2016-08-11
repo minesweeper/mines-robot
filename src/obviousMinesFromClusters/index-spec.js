@@ -32,7 +32,7 @@ describe('obviousMinesFromClusters', () => {
     expect(obviousMines(game)).toEqual([]);
     expect(safeChords(game)).toEqual([]);
     expect(obviousMinesFromClusters(game)).toEqual([
-      [2, 2]
+      [2, 2], [2, 0]
     ]);
   });
 });
