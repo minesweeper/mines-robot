@@ -1,7 +1,7 @@
 import clusterPairs from '.';
 import expect from 'expect';
 
-describe.only('clusterPairs', () => {
+describe('clusterPairs', () => {
   it('should generate pairs for clusters for comparison for 2 clusters', () => {
     const clusters = [
       [1, [[0, 0], [0, 1], [0, 2]]],
