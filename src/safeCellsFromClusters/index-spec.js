@@ -140,7 +140,7 @@ describe('safeCellsFromClusters', () => {
     ]);
   });
 
-  it('should analyse a game and return cell clusters corners', () => {
+  it('should analyse a game and return safe cell clusters from corners', () => {
     game = mines.createTest(`
       . . . . *
       . . . . .
@@ -157,6 +157,29 @@ describe('safeCellsFromClusters', () => {
     expect(obviousMines(game)).toEqual([[2, 0], [2, 1], [2, 3]]);
     expect(safeChords(game)).toEqual([]);
     expect(safeCellsFromClusters(game)).toEqual([
+    ]);
+  });
+
+  it('should analyse a game and return safe cell clusters from cell clusters in a complicated 1-2 pattern', () => {
+    game = mines.createTest(`
+      * * * * . .
+      . . * . * .
+      * . . . . *
+      . . . . . .
+      . * . . . *
+    `);
+    reveal([2, 2], [2, 3], [2, 4],
+           [3, 2], [3, 3], [3, 4],
+           [4, 2], [4, 3], [4, 4]);
+    // . . . . . .
+    // . . . . . .
+    // . . 1 2 2 .
+    // . . 1 0 2 .
+    // . . 1 0 1 .
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(safeCellsFromClusters(game)).toEqual([
+      [2, 1]
     ]);
   });
 });

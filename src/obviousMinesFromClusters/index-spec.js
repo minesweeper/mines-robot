@@ -14,7 +14,13 @@ describe('obviousMinesFromClusters', () => {
     });
   };
 
-  it('should analyse a game and return obvious mines from cell clusters 1-2 pattern', () => {
+  const mark = function() {
+    each(arguments, (cell) => {
+      expect(game.mark(cell)).toEqual(gameStates.STARTED);
+    });
+  };
+
+  it('should analyse a game and return obvious mines from cell clusters in a simple 1-2 pattern', () => {
     game = mines.createTest(`
       . * * * . .
       . . . . . .
@@ -33,6 +39,105 @@ describe('obviousMinesFromClusters', () => {
     expect(safeChords(game)).toEqual([]);
     expect(obviousMinesFromClusters(game)).toEqual([
       [2, 2], [2, 0]
+    ]);
+  });
+
+  it('should analyse a game and return obvious mines from cell clusters in a complicated 1-2 pattern', () => {
+    game = mines.createTest(`
+      * * * * . .
+      . . * . * .
+      * . . . . *
+      . . . . . .
+      . * . . . *
+    `);
+    reveal([2, 2], [2, 3], [2, 4],
+           [3, 2], [3, 3], [3, 4],
+           [4, 2], [4, 3], [4, 4]);
+    // . . . . . .
+    // . . . . . .
+    // . . 1 2 2 .
+    // . . 1 0 2 .
+    // . . 1 0 1 .
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(obviousMinesFromClusters(game)).toEqual([
+      [1, 4], [2, 5]
+    ]);
+  });
+
+  it('should analyse a game and return obvious mines from cell clusters in a 1-2-1 pattern', () => {
+    game = mines.createTest(`
+      . . . . . . . .
+      . * . * . * . .
+      * . . . . . . .
+      . . . . . . . *
+    `);
+    reveal([2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6],
+           [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 6]);
+    // . . . . . . . .
+    // . . . . . . . .
+    // . 2 2 1 2 1 2 .
+    // . 1 0 0 0 0 1 .
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(obviousMinesFromClusters(game)).toEqual([
+      [1, 1], [1, 5], [1, 3]
+    ]);
+  });
+
+  it('should analyse a game and return obvious mines from cell clusters in a 1-2-2-1 pattern', () => {
+    game = mines.createTest(`
+      * . . . . . . *
+      . . . . . . . .
+      * . . * * . . .
+    `);
+    reveal([0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6],
+           [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6]);
+    // . 1 0 0 0 0 1 .
+    // . 2 1 2 2 1 1 .
+    // . . . . . . . .
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(obviousMinesFromClusters(game)).toEqual([
+      [2, 4], [2, 3]
+    ]);
+  });
+
+  it('should analyse a game and return obvious mines from cell clusters taking into account flagged cells', () => {
+    game = mines.createTest(`
+      * . . . *
+      . * . * .
+      . . . . .
+      . * . * .
+    `);
+    reveal([0, 1], [0, 2], [0, 3],
+           [1, 2],
+           [2, 1], [2, 2], [2, 3]);
+    mark([1, 1], [1, 3]);
+    // . 2 2 2 .
+    // . F 2 F .
+    // . 2 4 2 .
+    // . . . . .
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(obviousMinesFromClusters(game)).toEqual([
+      [3, 3], [3, 1]
+    ]);
+  });
+
+  xit('should analyse a game and return obvious mines from non-adjacent cell clusters', () => {
+    game = mines.createTest(`
+      . * . * .
+      . . * . .
+    `);
+    reveal([0, 0], [0, 2], [0, 4],
+           [1, 0], [1, 4]);
+    // 1 . 3 . 1
+    // 1 . . . 1
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(obviousMinesFromClusters(game)).toEqual([
+      [1, 2]
     ]);
   });
 });

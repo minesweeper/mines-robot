@@ -256,4 +256,51 @@ describe('cellClusters', () => {
       [2, [[2, 1], [2, 3], [3, 1], [3, 2], [3, 3]]]
     ]);
   });
+
+  it('should analyse a game and return cell clusters in a complicated 1-2 pattern', () => {
+    game = mines.createTest(`
+      * * * * . .
+      . . * . * .
+      * . . . . *
+      . . . . . .
+      . * . . . *
+    `);
+    reveal([2, 2], [2, 3], [2, 4],
+           [3, 2], [3, 3], [3, 4],
+           [4, 2], [4, 3], [4, 4]);
+    // . . . . . .
+    // . . . . . .
+    // . . 1 2 2 .
+    // . . 1 0 2 .
+    // . . 1 0 1 .
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(cellClusters(game)).toEqual([
+      [1, [[1, 1], [1, 2], [1, 3], [2, 1], [3, 1]]],
+      [2, [[1, 2], [1, 3], [1, 4]]],
+      [2, [[1, 3], [1, 4], [1, 5], [2, 5], [3, 5]]],
+      [1, [[2, 1], [3, 1], [4, 1]]],
+      [2, [[2, 5], [3, 5], [4, 5]]],
+      [1, [[3, 1], [4, 1]]],
+      [1, [[3, 5], [4, 5]]]
+    ]);
+  });
+
+  it('should analyse a game provide non-adjacent cell clusters', () => {
+    game = mines.createTest(`
+      . * . . .
+      . . * * .
+    `);
+    reveal([0, 0], [0, 2], [0, 4],
+           [1, 0], [1, 4]);
+    // 1 . 3 . 1
+    // 1 . . . 1
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(cellClusters(game)).toEqual([
+      [1, [[0, 1], [1, 1]]],
+      [3, [[0, 1], [0, 3], [1, 1], [1, 2], [1, 3]]],
+      [1, [[0, 3], [1, 3]]]
+    ]);
+  });
 });
