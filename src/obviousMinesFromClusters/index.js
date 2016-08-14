@@ -1,12 +1,12 @@
 import {each, isEqual, unionWith} from 'lodash';
-import cellClusters from '../cellClusters';
+import exhaustivelyDeriveClusters from '../exhaustivelyDeriveClusters';
 import clusterPairs from '../clusterPairs';
 import clustersIntersect from '../clustersIntersect';
 import leftDifference from '../leftDifference';
 
 export default (game) => {
   let obviousMinesFromClusters = [];
-  const clusters = cellClusters(game);
+  const clusters = exhaustivelyDeriveClusters(game);
   const pairedClusters = clusterPairs(clusters);
 
   each(pairedClusters, (clusterPair) => {

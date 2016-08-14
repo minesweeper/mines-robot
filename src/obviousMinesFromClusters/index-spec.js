@@ -81,7 +81,7 @@ describe('obviousMinesFromClusters', () => {
     expect(obviousMines(game)).toEqual([]);
     expect(safeChords(game)).toEqual([]);
     expect(obviousMinesFromClusters(game)).toEqual([
-      [1, 1], [1, 5], [1, 3]
+      [1, 1], [1, 3], [1, 5]
     ]);
   });
 
@@ -125,7 +125,7 @@ describe('obviousMinesFromClusters', () => {
     ]);
   });
 
-  xit('should analyse a game and return obvious mines from non-adjacent cell clusters', () => {
+  it('should analyse a game and return obvious mines from non-adjacent cell clusters', () => {
     game = mines.createTest(`
       . * . * .
       . . * . .

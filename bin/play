@@ -18,8 +18,11 @@ _.times(count, function (index) {
   while (game.state() === mines.gameStates.NOT_STARTED || game.state() === mines.gameStates.STARTED) {
     result = robot.takeTurn(game);
   }
-  console.log("Game", index + 1, game.state(), result);
-  console.log(game.renderAsString());
+  if (game.state() === mines.gameStates.WON) {
+    console.log(index + 1, stats, game.state());
+  } else {
+    console.log(index + 1, stats, game.state(), result);
+  }
   stats[game.state()] += 1;
   game.reset();
 });

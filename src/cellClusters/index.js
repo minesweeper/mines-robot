@@ -21,5 +21,6 @@ export default (game) => {
       if (exists === false) { cellClusters.push(newCluster); }
     }
   });
+
   return cellClusters;
 };

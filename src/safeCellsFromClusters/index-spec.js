@@ -112,7 +112,7 @@ describe('safeCellsFromClusters', () => {
     expect(obviousMines(game)).toEqual([]);
     expect(safeChords(game)).toEqual([]);
     expect(safeCellsFromClusters(game)).toEqual([
-      [2, 3]
+      [2, 1], [2, 3], [2, 4]
     ]);
   });
 

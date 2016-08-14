@@ -10,6 +10,14 @@ describe('derivedClustersFromClusters', () => {
     expect(result).toEqual([[1, [[0, 2], [1, 2]]]]);
   });
 
+  it('should find a derived cluster within two clusters with larger cluster on left', () => {
+    const clusterOne = [1, [[0, 0], [0, 1]]];
+    const clusterTwo = [2, [[0, 0], [0, 1], [0, 2]]];
+
+    const result = derivedClustersFromClusters([clusterOne, clusterTwo]);
+    expect(result).toEqual([[1, [[0, 2]]]]);
+  });
+
   it('should not find a derived cluster between two identical two clusters', () => {
     const clusterOne = [1, [[0, 0], [0, 1]]];
     const clusterTwo = [1, [[0, 0], [0, 1]]];
