@@ -2,6 +2,10 @@ import isSequential from '.';
 import expect from 'expect';
 
 describe('isSequential', () => {
+  it('should determine that an empty list is not sequential', () => {
+    expect(isSequential([])).toBe(false);
+  });
+
   it('should determine that two horizontal cells are sequential', () => {
     const cells = [[0, 0], [0, 1]];
     expect(isSequential(cells)).toBe(true);
