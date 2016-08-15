@@ -46,3 +46,4 @@ var robot = require('./dist');
 * 0.2.3 bestGuess is much simpler now
 * 0.3.0 The first attempt at adding clusters detecting 1-1 and 1-2 patterns
 * 0.4.0 Add derived clusters
+* 0.5.0 New and improved 'safe cells from clusters' - gets expert pass rate to about 15%
