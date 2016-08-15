@@ -48,7 +48,7 @@ describe('safeCellsFromClusters', () => {
     expect(obviousMines(game)).toEqual([[1, 3]]);
     expect(safeChords(game)).toEqual([]);
     expect(safeCellsFromClusters(game)).toEqual([
-      [3, 2]
+      [0, 4], [1, 4], [3, 2]
     ]);
   });
 
@@ -112,7 +112,7 @@ describe('safeCellsFromClusters', () => {
     expect(obviousMines(game)).toEqual([]);
     expect(safeChords(game)).toEqual([]);
     expect(safeCellsFromClusters(game)).toEqual([
-      [2, 1], [2, 3], [2, 4]
+      [2, 3], [2, 4], [2, 1]
     ]);
   });
 

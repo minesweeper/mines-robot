@@ -60,7 +60,7 @@ describe('robot', () => {
   });
 
   describe('winning a game', () => {
-    xit('can win an expert game without guessing', () => {
+    it('can win an expert game without guessing', () => {
       game = mines.createTest(`
         . . . . . . . . . * * . . . * . . . . . . . . . . . . . * .
         . . . * . * . . . . . . . . * . . . * . . . * * * . * . . .
