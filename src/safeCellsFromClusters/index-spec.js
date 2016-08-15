@@ -182,4 +182,20 @@ describe('safeCellsFromClusters', () => {
       [2, 1]
     ]);
   });
+
+  it('should analyse a game and return safe cells from non-adjacent cell clusters', () => {
+    game = mines.createTest(`
+      . * . * .
+      . . . . .
+    `);
+    reveal([0, 0], [0, 2], [0, 4],
+           [1, 0], [1, 4]);
+    // 1 . 2 . 1
+    // 1 . . . 1
+    expect(obviousMines(game)).toEqual([]);
+    expect(safeChords(game)).toEqual([]);
+    expect(safeCellsFromClusters(game)).toEqual([
+      [1, 2]
+    ]);
+  });
 });
